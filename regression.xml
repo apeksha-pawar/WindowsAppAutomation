@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="ExamsoftRegressionSuite" verbose="1">
+  <listeners>
+    <listener class-name="org.uncommons.reportng.HTMLReporter"/>
+    <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
+  </listeners>
+  <test name="RegressionTest">
+    <classes>
+      <class name="com.examsoft.auto.ios.tests.Test_Login_InvaldCases" />
+      <class name="com.examsoft.auto.ios.tests.Test_Login_DifferentInstitute" />
+      <class name="com.examsoft.auto.ios.tests.Test_BeforeExam" />
+      <class name="com.examsoft.auto.ios.tests.Test_HomeMenu" />
+      <class name="com.examsoft.auto.ios.tests.Test_BackNavDisable_QueAttch_NoNotice" />
+      <class name="com.examsoft.auto.ios.tests.Test_GroupedQue_ExamAttch" />
+      <class name="com.examsoft.auto.ios.tests.Test_NonRandomize" />
+      <class name="com.examsoft.auto.ios.tests.Test_LockedAnsChoice" />
+      <class name="com.examsoft.auto.ios.tests.Test_GroupedQue_ExamAttch" />
+      <class name="com.examsoft.auto.ios.tests.Test_NonSecure_Exam" />
+      <class name="com.examsoft.auto.ios.tests.Test_NumberingDisable" />
+      <class name="com.examsoft.auto.ios.tests.Test_Randomize" />
+      <class name="com.examsoft.auto.ios.tests.Test_SpellCheck_RequireAnsEnable" />
+    </classes>
+  </test>
+</suite>
