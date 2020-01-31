@@ -1,6 +1,6 @@
-# examplify-ipad-automation
+# examplify-ipad-and-windows-automation
 
-This repository contains Test Suite for Examplify iPad application.
+This repository contains Test Suite for Examplify iPad and windows application.
 The test framework uses Java, TestNG and Appium tool stack for framework and script development.
 The scope of this framework to execute the Functional Tests like Smoke, Feature and Regression Test.
 ## Setup:
