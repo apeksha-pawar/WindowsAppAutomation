@@ -65,3 +65,12 @@ The scope of this framework to execute the Functional Tests like Smoke, Feature 
 - Start 'simple' Appium Server
 - Start the Inspector session while server is running
 - Add Desire Capabilities in 'automatic server' and start session
+
+# examplify-windows-automation
+- Installation 
+- Download and install WinAppDriver from: https://github.com/Microsoft/WinAppDriver/releases (you need to choose the file: WindowsApplicationDriver.msi). It’s a simple “next-next” installation.
+
+- Enable “Developer Mode” in our operating system (Win10): Let’s open the Settings menu, go to Update & Settings and choose the option “For Developers” and then click on “Developer Mode”
+
+- Inspect Elements
+- We will use Inspect tool to identify UI Elements of the application under test. 
