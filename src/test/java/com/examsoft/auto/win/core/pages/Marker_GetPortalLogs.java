@@ -77,50 +77,57 @@ public class Marker_GetPortalLogs extends PageBase {
 	@FindBy(xpath = "//a[@class=\"accountnav\"]//following-sibling::ul/li[5]/a")
 	public WebElement logOutLink;
 
-	public void getLogsFromPortal(String examType) throws FileNotFoundException, IOException, InterruptedException {
+	public String[] getLogsFromPortal(String examType) throws FileNotFoundException, IOException, InterruptedException {
+		String timeStamp[] = new String[2];
+		try {
+			Properties prop = new Properties();
+			Thread.sleep(3000);
+			prop.load(new FileInputStream(AppConstants.PROPERTY_FILE));
+			String url = prop.getProperty("PORTAL_URL");
+			System.out.println("URL" + url);
+			webDriver.get(prop.getProperty("PORTAL_URL"));
+			webDriver.manage().window().maximize();
+			Thread.sleep(7000);
+			userId.click();
+			userId.sendKeys("vrushalee.ajotikar@synerzip.com");
+			password.click();
+			password.sendKeys("999999");
+			loginButton.click();
+			Thread.sleep(3000);
+			tabAssessments.click();
+			Thread.sleep(4000);
+			examNameText.click();
+			if (examType.equals("withnotice")) {
+				examNameText.sendKeys("Auto_Test_Marker");
+			} else
+				examNameText.sendKeys("Auto_Test_Marker_woNotice");
 
-		Thread.sleep(3000);
-		prop.load(new FileInputStream(AppConstants.PROPERTY_FILE));
-		String url = prop.getProperty("PORTAL_URL");
-		System.out.println("URL" + url);
-		webDriver.get(prop.getProperty("PORTAL_URL"));
-		webDriver.manage().window().maximize();
-		Thread.sleep(7000);
-		userId.click();
-		userId.sendKeys("vrushalee.ajotikar@synerzip.com");
-		password.click();
-		password.sendKeys("999999");
-		loginButton.click();
-		Thread.sleep(3000);
-		tabAssessments.click();
-		Thread.sleep(4000);
-		examNameText.click();
-		if (examType.equals("withnotice")) {
-			examNameText.sendKeys("Auto_Test_Marker");
-		} else 
-			examNameText.sendKeys("Auto_Test_Marker_woNotice");
+			Select dropDown = new Select(postingDropdown);
+			dropDown.selectByVisibleText("All Postings");
+			examSearchButton.click();
+			Thread.sleep(3000);
+			searchedExam.click();
+			Thread.sleep(5000);
+			tabExamTaker.click();
+			Thread.sleep(2000);
+			examTakerTableHeading.click();
+			Thread.sleep(2000);
+			examTakerSnapShot.click();
+			webDriver.switchTo().frame("fSnapshotViewer");
+			Thread.sleep(8000);
+			timeStamp[0] = examStartTime.getText();
+			System.out.println("startExamTime : " + timeStamp[0]);
+			timeStamp[1] = examEndTime.getText();
+			System.out.println("examEndTime : " + timeStamp[1]);
+			webDriver.switchTo().parentFrame();
+			webDriver.switchTo().defaultContent();
+			snapShotCloseButton.click();
+			userAccount.click();
+			logOutLink.click();
 
-		Select dropDown = new Select(postingDropdown);
-		dropDown.selectByVisibleText("All Postings");
-		examSearchButton.click();
-		Thread.sleep(3000);
-		searchedExam.click();
-		Thread.sleep(5000);
-		tabExamTaker.click();
-		Thread.sleep(2000);
-		examTakerTableHeading.click();
-		Thread.sleep(2000);
-		examTakerSnapShot.click();
-		webDriver.switchTo().frame("fSnapshotViewer");
-		Thread.sleep(8000);
-		String startExamTime = examStartTime.getText();
-		System.out.println("startExamTime : " + startExamTime);
-		String endExamTime = examEndTime.getText();
-		System.out.println("examEndTime : " + endExamTime);
-		webDriver.switchTo().parentFrame();
-		webDriver.switchTo().defaultContent();
-		snapShotCloseButton.click();
-		userAccount.click();
-		logOutLink.click();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return timeStamp;
 	}
 }

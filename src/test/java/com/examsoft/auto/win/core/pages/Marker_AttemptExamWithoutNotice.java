@@ -17,61 +17,7 @@ import io.appium.java_client.windows.WindowsDriver;
  * @author apekshap
  *
  */
-public class Marker_AttemptExamWithoutNotice extends PageBase {
-	
-	@FindBy (name = "Add New Account")
-	public WebElement addNewAccountButton;
-	
-	@FindBy (name = "Institution ID")
-	public WebElement institutionIdTextField;
-	
-	@FindBy (name = "Demo - CBT (CBT)")
-	public WebElement institutionIdSuggestion;
-	
-	@FindBy (name = "Next")
-	public WebElement nextButton;
-	
-	@FindBy (name = "User ID")
-	public WebElement userIdTextField;
-	
-	@FindBy (name = "Password")
-	public WebElement passwordTextField;
-	
-	@FindBy (name = "Sign In")
-	public WebElement signInButton;
-	
-	@FindBy (name="READY FOR DOWNLOAD")
-	public WebElement readyForDownloadText;
-	
-	@FindBy (name = "Au_Marker-S_WN Ready For Download file_download")
-	public WebElement selectExamLink;
-	
-	@FindBy (name = "AllQT-NS")
-	public WebElement downloadedExam;
-	
-	@FindBy (name = "Download Exam")
-	public WebElement downloadExamButton;
-	
-	@FindBy (name ="DOWNLOADED")
-	public WebElement txtDownloaded;
-	
-	@FindBy (name = "EXAM PASSWORD")
-	public WebElement examPasswordText;
-	
-	@FindBy (name = "Enter")
-	public WebElement enterExamButton;
-	
-	@FindBy (name = "Nextarrow_forward")
-	public WebElement nextForwardArrow;
-	
-	@FindBy (name = "Continue")
-	public WebElement ContinueButton;
-	
-	@FindBy (name = "I am authorized to start my exam.")
-	public WebElement startExamCheckbox;
-	
-	@FindBy (name = "Start Exam")
-	public WebElement startActualExamButton;
+public class Marker_AttemptExamWithoutNotice extends PageBase {	
 	
 	@FindBy (name = "1")
 	public WebElement firstQuestion;
@@ -119,38 +65,10 @@ public class Marker_AttemptExamWithoutNotice extends PageBase {
 		super(winDriver);
 	}
 
-	public void loginToApp() throws InterruptedException {
-		Thread.sleep(8000);
-		winDriver.manage().window().maximize();
-		addNewAccountButton.click();
-		institutionIdTextField.click();
-		institutionIdTextField.sendKeys("CBT");
-		Thread.sleep(3000);
-		Actions actions = new Actions(winDriver);
-		actions.sendKeys(Keys.chord(Keys.TAB)).build().perform();
-		actions.sendKeys(Keys.chord(Keys.ENTER)).build().perform();
-		nextButton.click();
-		userIdTextField.click();
-		userIdTextField.sendKeys("pdeploy2");
-		passwordTextField.click();
-		passwordTextField.sendKeys("999999");
-		actions.sendKeys(Keys.chord(Keys.TAB)).build().perform();
-		actions.sendKeys(Keys.chord(Keys.ENTER)).build().perform();
-		Thread.sleep(30000);
-		downloadExamButton.click();
-		Thread.sleep(25000);
-		examPasswordText.click();
-		examPasswordText.sendKeys("test123");
-		enterExamButton.click();
-		Thread.sleep(5000);
-		ContinueButton.click();
-		Thread.sleep(3000);
-		startExamCheckbox.click();
-		Thread.sleep(2000);
-		//startActualExamButton.click();
-		actions.sendKeys(Keys.chord(Keys.TAB)).build().perform();
-		actions.sendKeys(Keys.chord(Keys.ENTER)).build().perform();
-		Thread.sleep(3000);
+	public void attemptExam(Marker_AttemptExamWithNotice marker) throws InterruptedException {
+		try {
+		marker.startExam();
+		marker.downloadExam();
 		firstQuestion.click();
 		secondQuestion.click();
 		selectTrue.click();
@@ -160,16 +78,19 @@ public class Marker_AttemptExamWithoutNotice extends PageBase {
 		nextAfterAttempButton.click();
 		nextAfterAttempButton.click();
 		exitExamCheckBox.click();
+		Actions actions = new Actions(winDriver);
 		actions.sendKeys(Keys.chord(Keys.TAB)).build().perform();
 		actions.sendKeys(Keys.chord(Keys.ENTER)).build().perform();
 		continueToUploadButton.click();
 		Thread.sleep(15000);
 		actions.sendKeys(Keys.chord(Keys.TAB)).build().perform();
 		actions.sendKeys(Keys.chord(Keys.ENTER)).build().perform();
-		//closeButton.click();
 		Thread.sleep(12000);
 		homeMenuDropDown.click();
 		Thread.sleep(3000);
 		closeButton.click();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 }

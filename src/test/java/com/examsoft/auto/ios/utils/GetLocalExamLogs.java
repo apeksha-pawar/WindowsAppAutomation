@@ -29,13 +29,13 @@ import io.appium.java_client.windows.WindowsDriver;
 public class GetLocalExamLogs {
 
 
-	public void findLogsFromLocal() throws IOException {
+	public String[] findLogsFromLocal() throws IOException {
 		String dir = "C:\\ProgramData\\Examplify";
 		String latestFolder = findFoldersInDirectory(dir).get(findFoldersInDirectory(dir).size() - 5);
 		List<String> allFilesFromLatestFolder = getFilesInFolder(dir, latestFolder);
+		String [] timeStamp = getTimeStamp(allFilesFromLatestFolder);
 		System.out.println("Latest Folder = " + latestFolder);
-		String timeStamp = getTimeStamp(allFilesFromLatestFolder);
-		System.out.println(timeStamp);
+		return timeStamp;		
 	}
 
 	public List<String> findFoldersInDirectory(String directoryPath) {
@@ -66,11 +66,10 @@ public class GetLocalExamLogs {
 		return results;
 	}
 
-	public String getTimeStamp(List<String> allFilesFromLatestFolder) throws IOException {
+	public String[] getTimeStamp(List<String> allFilesFromLatestFolder) throws IOException {
 		String fileName = null;
-		String startTime = null;
-		String endTime = null;
-		String timeStamp = null;
+		//String timeStamp = null;
+		String timeStamp[]=new String[4];
 		for (int i = 0; i < allFilesFromLatestFolder.size(); i++) {
 			File file = new File(allFilesFromLatestFolder.get(i));
 			String str1 = "assessment starts";
@@ -79,21 +78,48 @@ public class GetLocalExamLogs {
 			while (scanner.hasNextLine()) {
 				final String lineFromFile = scanner.nextLine();
 				if (lineFromFile.contains(str1) && !lineFromFile.matches("^(?:\\p{L}\\p{M}*|[\\-])*$")) {
-					System.out.println("-----I found " + str1 + " in file = " + file.getName());
+					System.out.println(str1 + " in file = " + file.getName());
 					fileName = file.getName();
-					startTime = lineFromFile;
+					timeStamp[0] = lineFromFile;
 				}
 
 				if (lineFromFile.contains(str2) && !lineFromFile.matches("^(?:\\p{L}\\p{M}*|[\\-])*$")) {
-					System.out.println("-----I found " + str2 + " in file = " + file.getName());
+					System.out.println(str2 + " in file = " + file.getName());
 					fileName = file.getName();
-					endTime = lineFromFile;
+					timeStamp[1] = lineFromFile;
 				}
 			}
 		}
-		startTime = startTime.substring(startTime.indexOf("[INFO]") + 6, startTime.indexOf("(") - 1);
-		endTime = endTime.substring(endTime.indexOf("[INFO]") + 6, endTime.indexOf("(") - 1);
-		timeStamp = "Exam start time " + startTime + "Exam end time " + endTime;
-		return timeStamp = "Exam start time " + startTime + '\n' + "Exam end time " + endTime;
+		timeStamp[0] = timeStamp[0].substring(timeStamp[0].indexOf("[INFO]") + 6, timeStamp[0].indexOf("(") - 1);
+		timeStamp[1] = timeStamp[1].substring(timeStamp[1].indexOf("[INFO]") + 6, timeStamp[1].indexOf("(") - 1);
+		//timeStamp = "Exam start time " + startTime + "Exam end time " + endTime;
+		return timeStamp ;
+	}	
+	
+	public void compareLocalAndPortalLogs(String localTimestamp[], String portalTimestamp[]) {
+		Date dt = new Date();
+		String localLogStartTime = localTimestamp[0];
+		String localEndTimeTime = localTimestamp[1];
+		String portalLogStartTime = portalTimestamp[0];
+		String portalLogEndTime = portalTimestamp[1];
+		
+		String getLocalStartTime = localLogStartTime.substring(localLogStartTime.indexOf(Integer.toString(dt.getDate()))+2,
+				localLogStartTime.indexOf(Integer.toString(dt.getYear()+1900))-4);
+		String getLocalEndTime = localEndTimeTime.substring(localEndTimeTime.indexOf(Integer.toString(dt.getDate()))+2,
+				localEndTimeTime.indexOf(Integer.toString(dt.getYear()+1900))-4);
+		System.out.println("date1 is " + getLocalStartTime.replace(" ", ""));
+		System.out.println("date2 is " + getLocalEndTime.replace(" ", ""));
+		
+		String getPortalStartTime = portalLogStartTime.substring(0,portalLogStartTime.indexOf("PM")-4);
+		String getPortalEndTime = portalLogEndTime.substring(0,portalLogEndTime.indexOf("PM")-4);
+		System.out.println("date12 is " + getPortalStartTime);
+		System.out.println("date22 is " + getPortalEndTime);
+		
+		if(getLocalStartTime.replace(" ", "").equals(getPortalStartTime))
+			System.out.println("Exam start time matched");
+		else System.out.println("Exam start time not matched");
+		if(localEndTimeTime.replace(" ", "").equals(getPortalEndTime)) 
+			System.out.println("Exam end time matched");
+			else System.out.println("Exam end time not matched");
 	}
 }

@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -33,9 +35,12 @@ public class Test_MarkerWithNoticeLogs extends BaseTest {
 	@Test
 	public void loginw() throws Exception {
 		String examType = "withnotice";
-		Thread.sleep(8000);
-		login.loginToApp();
+		String localTimeStamp[] = localLogs.findLogsFromLocal();	
+	    String portalTimeStamp[] = portalLogs.getLogsFromPortal(examType);
+
+		login.attemptExam();
 		localLogs.findLogsFromLocal();		
-		portalLogs.getLogsFromPortal(examType);
+		//portalLogs.getLogsFromPortal(examType);
+	//	localLogs.compareLocalAndPortalLogs(portalTimeStamp, portalTimeStamp);
 	}
 }

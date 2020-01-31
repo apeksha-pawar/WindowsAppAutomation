@@ -24,12 +24,14 @@ public class Test_MarkerWithoutNoticeLogs extends BaseTest {
 	GetLocalExamLogs localLogs;
 	Properties prop = new Properties();			
 	Marker_GetPortalLogs portalLogs;
+	Marker_AttemptExamWithNotice marker;
 	
 	@BeforeMethod
 	public void testSetup() throws FileNotFoundException, IOException {
 		login = new Marker_AttemptExamWithoutNotice(winDriver); 
 		localLogs = new GetLocalExamLogs();
 		portalLogs = new Marker_GetPortalLogs(webDriver);
+		marker = new Marker_AttemptExamWithNotice(winDriver);
 	}
 	
 	@AfterClass
@@ -40,8 +42,8 @@ public class Test_MarkerWithoutNoticeLogs extends BaseTest {
 	public void loginw() throws Exception {
 		Thread.sleep(8000);
 		String examType = "withoutnotice";
-//		login.loginToApp();
-//		localLogs.findLogsFromLocal();		
+		login.attemptExam(marker);
+		localLogs.findLogsFromLocal();		
 		portalLogs.getLogsFromPortal(examType);
 	}
 }
