@@ -73,4 +73,5 @@ The scope of this framework to execute the Functional Tests like Smoke, Feature 
 - Enable “Developer Mode” in our operating system (Win10): Let’s open the Settings menu, go to Update & Settings and choose the option “For Developers” and then click on “Developer Mode”
 
 - Inspect Elements
+- Launch inspector from C:\Program Files (x86)\Windows Kits
 - We will use Inspect tool to identify UI Elements of the application under test. 
