@@ -68,7 +68,6 @@ public class GetLocalExamLogs {
 
 	public String[] getTimeStamp(List<String> allFilesFromLatestFolder) throws IOException {
 		String fileName = null;
-		//String timeStamp = null;
 		String timeStamp[]=new String[4];
 		for (int i = 0; i < allFilesFromLatestFolder.size(); i++) {
 			File file = new File(allFilesFromLatestFolder.get(i));
@@ -89,10 +88,10 @@ public class GetLocalExamLogs {
 					timeStamp[1] = lineFromFile;
 				}
 			}
+			scanner.close();
 		}
 		timeStamp[0] = timeStamp[0].substring(timeStamp[0].indexOf("[INFO]") + 6, timeStamp[0].indexOf("(") - 1);
 		timeStamp[1] = timeStamp[1].substring(timeStamp[1].indexOf("[INFO]") + 6, timeStamp[1].indexOf("(") - 1);
-		//timeStamp = "Exam start time " + startTime + "Exam end time " + endTime;
 		return timeStamp ;
 	}	
 	
